@@ -71,7 +71,7 @@ PHP_FUNCTION(rename_function)
 	}
 	lower_new[i] = 0;
 
-  if (zend_hash_find(EG(function_table), lower_orig, orig_fname_len + 1, (void **) &func) == FAILURE) {
+	if (zend_hash_find(EG(function_table), lower_orig, orig_fname_len + 1, (void **) &func) == FAILURE) {
 		php_error_docref(NULL TSRMLS_CC, E_WARNING, "%s(%s, %s) failed: %s does not exist!"			,
 						get_active_function_name(TSRMLS_C),
 						lower_orig,  lower_new, lower_orig);
@@ -111,6 +111,11 @@ PHP_FUNCTION(rename_function)
 		RETVAL_FALSE;
 		goto rename_end;
 	}
+
+#if (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 4) || (PHP_MAJOR_VERSION > 5)
+	rename_cache_clear_all_functions(TSRMLS_C);
+#endif
+
 	RETVAL_TRUE;
 
 rename_end:

@@ -6,6 +6,6 @@ PHP_ARG_ENABLE(rename, whether to enable function rename support,
 [  --enable-rename          Enable function rename support])
 
 if test "$PHP_RENAME" != "no"; then
-	rename_sources="php_rename.c "
+	rename_sources="php_rename.c php_rename_cache.c "
 	PHP_NEW_EXTENSION(rename, $rename_sources, $ext_shared)
 fi

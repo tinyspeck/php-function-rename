@@ -28,6 +28,10 @@ extern zend_module_entry rename_module_entry;
 
 PHP_FUNCTION(rename_function);
 
+#if (PHP_MAJOR_VERSION == 5 && PHP_MINOR_VERSION >= 4) || (PHP_MAJOR_VERSION > 5)
+void rename_cache_clear_all_functions(TSRMLS_D);
+#endif
+
 #endif  /* PHP_RENAME_H */
 
 /*
